@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>4brondong</title>
+    <!-- Import font Poppins -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+  body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #ffffff; /* putih bersih */
+  color: #1a3d7c; /* biru deep untuk teks */
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* tombol umum */
+button {
+  background: #1a3d7c; /* biru deep */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+button:hover {
+  background: #345caa; /* biru lebih terang pas hover */
+}
+
+/* Halaman utama */
+.page {
+  text-align: center;
+  display: none;
+  position: relative;
+  padding: 40px 20px;
+}
+.page.active {
+  display: block;
+}
+
+/* tombol khusus */
+#yesBtn {
+  background: #4caf50; /* hijau lembut */
+  transform: scale(1);
+}
+#noBtn {
+  background: #f44336; /* merah lembut */
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%) scale(1);
+}
+button:hover {
+  opacity: 0.9;
+}
+
+/* heading & paragraf */
+h1,
+p {
+  color: #1a3d7c;
+  text-shadow: none; /* clean look */
+}
+
+/* Password Page */
+.password-card {
+  background: #f9f9ff; /* putih kebiruan */
+  border: 1px solid #d9e2f3;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(26, 61, 124, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  max-width: 700px;
+  margin: auto;
+}
+.password-left img {
+  width: 200px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(26, 61, 124, 0.25);
+}
+.password-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#passwordDisplay {
+  font-size: 24px;
+  margin-bottom: 15px;
+  letter-spacing: 5px;
+  border: 2px solid #1a3d7c;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: #fff;
+  color: #1a3d7c;
+  font-weight: 600;
+  min-width: 150px;
+  text-align: center;
+}
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 70px);
+  grid-gap: 10px;
+}
+.keypad button {
+  font-size: 20px;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: #1a3d7c;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 4px 10px rgba(26, 61, 124, 0.3);
+}
+.keypad button:hover {
+  background: #345caa;
+}
+#errorMsg {
+  margin-top: 10px;
+  color: #e63946;
+  font-weight: 600;
+}
+
+/* Animasi zoom smooth */
+@keyframes zoomIn {
+  0% {
+    transform: scale(0.8) translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+.zoom-effect {
+  animation: zoomIn 1.2s ease forwards;
+}
+
+/* Landing Page */
+#landingPage {
+  display: block !important;
+  padding: 50px 20px;
+  text-align: center;
+}
+#landingPage h1,
+#landingPage p {
+  opacity: 0;
+}
+
+/* Answer Page */
+#answerPage button {
+  background: #1a3d7c;
+  color: white;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 12px 25px;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(26, 61, 124, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+#answerPage button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(26, 61, 124, 0.4);
+}
+
+/* ==== BOOK SECTION ==== */
+.book-container {
+  position: relative;
+  margin: 80px auto;
+  display: none; /* default hidden */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  perspective: 1200px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease;
+}
+#landingPage.active .book-container {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.book {
+  position: relative;
+  width: 500px;
+  height: 300px;
+  display: flex;
+  transform-style: preserve-3d;
+  box-shadow: 0 12px 28px rgba(26, 61, 124, 0.25);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f4f7ff;
+}
+.book .sheet {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #d9e2f3;
+  padding: 20px;
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1a1a1a;
+  transition: transform 1s ease;
+}
+#landingPage.active .book-container .left {
+  animation: flipLeft 1.2s ease forwards;
+}
+#landingPage.active .book-container .right {
+  animation: flipRight 1.2s ease forwards;
+}
+@keyframes flipLeft {
+  0% { transform: rotateY(90deg); }
+  60% { transform: rotateY(-10deg); }
+  100% { transform: rotateY(0deg); }
+}
+@keyframes flipRight {
+  0% { transform: rotateY(-90deg); }
+  60% { transform: rotateY(10deg); }
+  100% { transform: rotateY(0deg); }
+}
+.book-text {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  max-width: 500px;
+  color: #1a3d7c;
+  font-size: 16px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  line-height: 1.6;
+  opacity: 0;
+  transition: opacity 2s ease;
+  z-index: 2;
+}
+#landingPage.active .book-container .book-text {
+  opacity: 1;
+}
+
+/* Fav Chat */
+#favChat {
+  padding: 40px 20px;
+  display: none; /* default hidden */
+  flex-direction: column;
+  align-items: center;
+}
+#landingPage.active #favChat {
+  display: flex;
+}
+#favChat .title {
+  color: #1a3d7c;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
+.chat-screen {
+  width: 400px;
+  background: #f4f7ff;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0 4px 15px rgba(26, 61, 124, 0.25);
+}
+.chat-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.6s ease forwards;
+}
+.chat-row.left { justify-content: flex-start; }
+.chat-row.right { justify-content: flex-end; }
+.avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.chat-bubble {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.4;
+  box-shadow: 0 2px 6px rgba(26, 61, 124, 0.2);
+}
+.chat-row.left .chat-bubble {
+  background: #eaf0ff;
+  color: #1a1a1a;
+  border-bottom-left-radius: 5px;
+}
+.chat-row.right .chat-bubble {
+  background: #1a3d7c;
+  color: white;
+  border-bottom-right-radius: 5px;
+}
+
+/* Closing Section */
+#closingSection {
+  display: none; /* default hidden */
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 30px 20px;
+}
+#landingPage.active #closingSection {
+  display: flex;
+  animation: fadeIn 1.5s ease forwards;
+}
+.closing-title {
+  font-weight: bold;
+  color: #1a3d7c;
+  margin-bottom: 30px;
+}
+.closing-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  justify-items: center;
+}
+.closing-img {
+  width: 220px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(26, 61, 124, 0.25);
+  animation: float 3s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+.closing-img:hover { transform: scale(1.08); }
+.closing-img:nth-child(2n) { animation-delay: 0.5s; }
+.closing-img:nth-child(3n) { animation-delay: 1s; }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* Fireworks */
+#landingPage.active .fireworks {
+  display: block;
+}
+
+.fireworks {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow:
+    0 0 10px #ffd700,
+    0 0 20px #87cefa,
+    0 0 30px #ff69b4;
+  animation: explode 1.5s ease-out infinite;
+  z-index: 9999;
+  display: none; /* default: disembunyiin dulu */
+}
+
+.fireworks:nth-child(1) { left: 20%; top: 40%; animation-delay: 0s; }
+.fireworks:nth-child(2) { left: 50%; top: 30%; animation-delay: 0.5s; }
+.fireworks:nth-child(3) { left: 75%; top: 50%; animation-delay: 1s; }
+.fireworks:nth-child(4) { left: 35%; top: 60%; animation-delay: 1.3s; }
+
+@keyframes explode {
+  0% { transform: scale(0.5); opacity: 1; }
+  70% { transform: scale(3); opacity: 0.8; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+  </head>
+
+  <body>
+    <!-- Halaman Password -->
+    <div id="passwordPage" class="page active">
+      <h1>Isi password, jangan isi hati 😏</h1>
+      <div class="password-card">
+        <div class="password-left">
+          <img src="gif/ppp.jpg" alt="Foto Kamu" />
+        </div>
+        <div class="password-right">
+          <div id="passwordDisplay"></div>
+          <div class="keypad">
+            <button onclick="pressNum('1')">1</button>
+            <button onclick="pressNum('2')">2</button>
+            <button onclick="pressNum('3')">3</button>
+            <button onclick="pressNum('4')">4</button>
+            <button onclick="pressNum('5')">5</button>
+            <button onclick="pressNum('6')">6</button>
+            <button onclick="pressNum('7')">7</button>
+            <button onclick="pressNum('8')">8</button>
+            <button onclick="pressNum('9')">9</button>
+            <button onclick="clearPass()">C</button>
+            <button onclick="pressNum('0')">0</button>
+            <button onclick="checkPassword()">OK</button>
+          </div>
+          <p id="errorMsg"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Halaman Pertanyaan -->
+    <div id="questionPage" class="page">
+      <h1>kalo aku ilang seharian, kira kira kamu bakal nyarii akuu gaa</h1>
+      <button id="yesBtn" onclick="yesAnswer()">nyarii</button>
+      <button id="noBtn" onmouseover="moveButton()">ga peduli</button>
+      <br /><br />
+      <img src="gif/kucing.gif" alt="luvv" width="500" />
+    </div>
+
+    <!-- Halaman Jawaban -->
+    <div id="answerPage" class="page">
+      <h1>Duhh jadi melting akuu meskipun maksa dikit yaa wkwkwk</h1>
+      <button onclick="goToLanding()">Next dikk👉</button>
+      <br /><br />
+      <img src="gif/happyber2.gif" alt="luvv" width="500" />
+    </div>
+
+    <!-- Landing Page -->
+    <div id="landingPage" class="page">
+      <h1>Hai Haii dikkkk</h1>
+      <p>akuu gabut bangett pls, jadi aku buat website kecil ini buat kamuu✨</p>
+      <p>
+        HTS, temen deket, apapun namanya… aku cuma mau bilang makasih udah
+        ladenin aku yang egois ini cmiww
+      </p>
+      <audio id="bgMusic" loop>
+        <source
+          src="audio/The 1975 - About You (Official).mp3"
+          type="audio/mpeg"
+        />
+        Browser kamu tidak mendukung audio.
+      </audio>
+
+      <!-- Buku Section -->
+      <div id="bookSection" class="book-container">
+        <div class="book">
+          <div class="sheet left">
+            <p>
+              Dear Kamuuu, <br />
+              Kadang akuu tuh ngerasa kamu lebih dewasa dari aku akhir akhirr ini. Makasih banget udah peduli sama aku meskipun kadang aku ga sadar, sering ngalah juga sama aku yang kadang egois.
+            </p>
+          </div>
+          <div class="sheet right">
+            <p>Terus makasih juga ga bosen-bosen buat ingetin aku hehe luvvv.
+             <br>jujur ini first time akuu bikin web buatt hal personal kaya gini semogaa kamu suka dehh
+            </p>
+          </div>
+        </div>
+      </div>
+
+        <!-- yapping -->
+    <section id="favChat">
+      <h2 class="title">Karna kita ngga punya foto bareng jadi akuu taruh yapiing kamu ajaa wkwk</h2>
+      <div class="chat-screen">
+        <!-- dia -->
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">mau meet ga</div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">kesabaran setipis dompet ku</div>
+        </div>
+        <!-- <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">berasa ke di animee jirrr</div>
+        </div> -->
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">hey why don't you chat me?</div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+            bilang aja kalo kangen maa gengsi muluu 😉
+          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">ke anak kecil aja lu cill</div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">kamu yang bikin aku mati topik</div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+            aku sebagai orang dewasa ngerti, kamu ga bakal ngerti dek
+          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+            pertanda nauu, jangan di lanjutin ingett
+          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+mau tidur dluan nau, semangat ngodingnya          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+coba nau ak suka ketawa,ngakak bingung sendiri klo denger vn mu          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+ku kasih mangga 5 kilo  kalo sering bikin ak salting           </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+iyaa gapapa,kalo lagi bm SE isi dunia pun ikut ke bawa          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+soalnya apa yang kita anggap spele justru itu yang paling berguna,biasanya si          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+lagii mood dengerin cerita ga? kalo ngga gapapa          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+oiya,kalo mau istirahat, istirahat aja km kan baru balik          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+hampir tepar loh,aku nahan demi km pdhal 😔
+          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+kamu cukup nikmatin aja,aku yang proses          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+cupcucpcup jangan badmood nau,nanti dosenya takutt          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+yauda kita baikan yaa nauu          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+pemain ga berisik          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+ka nau yang baik hati, penyayang,maha pemaaf           </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">modus ga sih          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+gpp ak pendengar yang baik,walaupun          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+aku percaya 100%          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+semangat nnaauu          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+btw Jumat tanggal merah yhh,jadi kita bisa mainn nih 3 hari 👉👈
+          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">
+            halah pasti main sama orang lainn tuhh,cihh jadi kmu mainya pas aku tidur yhh
+          </div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">🦅harus</div>
+        </div>
+        <div class="chat-row left">
+          <img src="gif/lucas.jpeg" alt="dia" class="avatar" />
+          <div class="chat-bubble">yauda main sendiri aja sana lh</div>
+        </div>
+    </div>
+
+ <div id="closingSection" class="closing-content">
+  <h2 class="closing-title">mode mas mas ya dik kalo di game</h2>
+        <p>meskipun ini cuma game kadang ada hal kecil yang aku inget dari kamu, contohnya joki pribadii aku si wkwk jangan bosen gendong aku ya!!</p>
+
+<br><br>
+  <div class="closing-gallery">
+    <img src="gif/roblok1.png" alt="Gaming 1" class="closing-img">
+    <img src="gif/roblok2.png" alt="Gaming 2" class="closing-img">
+    <img src="gif/roblok3.png" alt="Gaming 3" class="closing-img">
+    <img src="gif/ml1.jpg" alt="Gaming 4" class="closing-img">
+    <img src="gif/ml2.jpg" alt="Gaming 5" class="closing-img">
+    <img src="gif/ml4.jpg" alt="Gaming 6" class="closing-img">
+  </div>
+</div>
+
+
+
+    </section>
+
+
+
+
+    <!-- Java Script -->
+    <script>
+      const correctPassword = "2839";
+      let noBtnSize = 1;
+      let yesBtnSize = 1;
+      let inputPass = "";
+
+      function showPage(id) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+      }
+
+      function pressNum(num) {
+        inputPass += num;
+        document.getElementById("passwordDisplay").textContent = "*".repeat(
+          inputPass.length
+        );
+      }
+
+      function clearPass() {
+        inputPass = "";
+        document.getElementById("passwordDisplay").textContent = "";
+      }
+
+      function checkPassword() {
+        if (inputPass === correctPassword) {
+          showPage("questionPage");
+        } else {
+          document.getElementById("errorMsg").innerText = "Password salah 😢";
+          clearPass();
+        }
+      }
+
+      function yesAnswer() {
+        showPage("answerPage");
+        const music = document.getElementById("bgMusic");
+        music.play();
+      }
+
+      function goToLanding() {
+        showPage("landingPage");
+
+        // animasi teks di landingPage
+        const elements = document.querySelectorAll(
+          "#landingPage h1, #landingPage p"
+        );
+        elements.forEach((el, index) => {
+          el.classList.remove("zoom-effect");
+          void el.offsetWidth;
+          el.style.animationDelay = `${index * 1}s`;
+          el.classList.add("zoom-effect");
+        });
+      }
+
+      function moveButton() {
+        const noBtn = document.getElementById("noBtn");
+        const yesBtn = document.getElementById("yesBtn");
+
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+
+        noBtnSize -= 0.1;
+        if (noBtnSize < 0.3) noBtnSize = 0.3;
+        noBtn.style.transform = `scale(${noBtnSize})`;
+
+        yesBtnSize += 0.1;
+        yesBtn.style.transform = `scale(${yesBtnSize})`;
+      }
+
+      // Scroll trigger buat buku
+      window.addEventListener("scroll", () => {
+        const book = document.getElementById("bookSection");
+        if (!book) return;
+        const rect = book.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        if (rect.top < windowHeight - 100) {
+          book.classList.add("show");
+        }
+      });
+      function goToLanding() {
+        showPage("landingPage");
+
+        // animasi teks di landingPage
+        const elements = document.querySelectorAll(
+          "#landingPage h1, #landingPage p"
+        );
+        elements.forEach((el, index) => {
+          el.classList.remove("zoom-effect");
+          void el.offsetWidth;
+          el.style.animationDelay = `${index * 1}s`;
+          el.classList.add("zoom-effect");
+        });
+
+        // reset supaya bookSection bisa ikut muncul kalau discroll
+        const book = document.getElementById("bookSection");
+        if (book) book.style.display = "flex";
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        const rows = document.querySelectorAll(".chat-row");
+        rows.forEach((row, i) => {
+          row.style.animationDelay = `${i * 1.2}s`;
+        });
+      });
+      
+    </script>
+      <!-- taruh di paling bawah body -->
+<div class="fireworks"></div>
+<div class="fireworks"></div>
+<div class="fireworks"></div>
+<div class="fireworks"></div>
+  </body>
+
+
+</html>
