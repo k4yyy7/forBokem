@@ -8,19 +8,19 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
     />
-    <style>
-  body {
+ <style>
+body {
   margin: 0;
   font-family: "Poppins", sans-serif;
-  background: #ffffff; /* putih bersih */
-  color: #1a3d7c; /* biru deep untuk teks */
+  background: #ffffff;
+  color: #1a3d7c;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
 /* tombol umum */
 button {
-  background: #1a3d7c; /* biru deep */
+  background: #1a3d7c;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -31,10 +31,11 @@ button {
   font-family: "Poppins", sans-serif;
 }
 button:hover {
-  background: #345caa; /* biru lebih terang pas hover */
+  background: #345caa;
+  opacity: 0.9;
 }
 
-/* Halaman utama */
+/* Halaman umum */
 .page {
   text-align: center;
   display: none;
@@ -42,35 +43,48 @@ button:hover {
   padding: 40px 20px;
 }
 .page.active {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  text-align: center;
 }
 
 /* tombol khusus */
 #yesBtn {
-  background: #4caf50; /* hijau lembut */
+  background: #4caf50;
   transform: scale(1);
 }
 #noBtn {
-  background: #f44336; /* merah lembut */
+  background: #f44336;
   position: absolute;
   left: 50%;
   top: 60%;
   transform: translate(-50%, -50%) scale(1);
-}
-button:hover {
-  opacity: 0.9;
 }
 
 /* heading & paragraf */
 h1,
 p {
   color: #1a3d7c;
-  text-shadow: none; /* clean look */
+  text-shadow: none;
 }
 
 /* Password Page */
+.password-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.password-container h1 {
+  margin: 0;
+  font-size: 20px;
+  color: #1a3d7c;
+}
 .password-card {
-  background: #f9f9ff; /* putih kebiruan */
+  background: #f9f9ff;
   border: 1px solid #d9e2f3;
   padding: 30px;
   border-radius: 20px;
@@ -121,6 +135,8 @@ p {
   transition: 0.2s;
   font-family: "Poppins", sans-serif;
   box-shadow: 0 4px 10px rgba(26, 61, 124, 0.3);
+  position: relative;
+  z-index: 10; /* fix: tombol selalu di depan */
 }
 .keypad button:hover {
   background: #345caa;
@@ -177,7 +193,7 @@ p {
 .book-container {
   position: relative;
   margin: 80px auto;
-  display: none; /* default hidden */
+  display: none;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -253,7 +269,7 @@ p {
 /* Fav Chat */
 #favChat {
   padding: 40px 20px;
-  display: none; /* default hidden */
+  display: none;
   flex-direction: column;
   align-items: center;
 }
@@ -313,7 +329,7 @@ p {
 
 /* Closing Section */
 #closingSection {
-  display: none; /* default hidden */
+  display: none;
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -355,7 +371,6 @@ p {
 #landingPage.active .fireworks {
   display: block;
 }
-
 .fireworks {
   position: fixed;
   width: 5px;
@@ -368,9 +383,8 @@ p {
     0 0 30px #ff69b4;
   animation: explode 1.5s ease-out infinite;
   z-index: 9999;
-  display: none; /* default: disembunyiin dulu */
+  display: none;
 }
-
 .fireworks:nth-child(1) { left: 20%; top: 40%; animation-delay: 0s; }
 .fireworks:nth-child(2) { left: 50%; top: 30%; animation-delay: 0.5s; }
 .fireworks:nth-child(3) { left: 75%; top: 50%; animation-delay: 1s; }
@@ -391,37 +405,123 @@ p {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* === RESPONSIVE STYLE === */
+@media (max-width: 1024px) {
+  .password-card {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+  .password-left img { width: 150px; }
+  .book { width: 90%; height: auto; }
+  .book .sheet { font-size: 14px; padding: 15px; }
+  .chat-screen { width: 90%; }
+  .closing-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  .closing-img { width: 180px; height: 120px; }
+}
+
+@media (max-width: 600px) {
+  body { font-size: 14px; }
+  h1 { font-size: 20px; }
+  p { font-size: 14px; }
+  .password-card {
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+  }
+  .password-left img { width: 120px; }
+  #passwordDisplay {
+    font-size: 18px;
+    min-width: 100px;
+    padding: 8px 15px;
+  }
+  .keypad {
+    grid-template-columns: repeat(3, 60px);
+    grid-gap: 8px;
+  }
+  .keypad button {
+    font-size: 18px;
+    padding: 12px;
+  }
+  .book { width: 100%; height: auto; }
+  .book-text { font-size: 14px; width: 90%; }
+  .chat-screen { width: 100%; padding: 15px; }
+  .chat-bubble { max-width: 85%; font-size: 13px; }
+  .closing-gallery { grid-template-columns: 1fr; gap: 15px; }
+  .closing-img { width: 90%; height: auto; }
+}
+
+/* Closing Section */
+#closingSection {
+  display: none; /* default hidden */
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 50px 20px;
+  gap: 25px;
+}
+#landingPage.active #closingSection {
+  display: flex;
+  animation: fadeIn 1.5s ease forwards;
+}
+.closing-title {
+  font-weight: bold;
+  color: #1a3d7c;
+  font-size: 24px;
+}
+#closingSection p {
+  font-size: 16px;
+  max-width: 600px;
+  line-height: 1.6;
+  color: #333;
+}
+.closing-gif img {
+  width: 250px;
+  max-width: 90%;
+  display: block;
+}
+
+
 </style>
+
   </head>
 
   <body>
     <!-- Halaman Password -->
-    <div id="passwordPage" class="page active">
-      <h1>Isi password, jangan isi hati 😏</h1>
-      <div class="password-card">
-        <div class="password-left">
-          <img src="gif/ppp.jpg" alt="Foto Kamu" />
+ <div id="passwordPage" class="page active">
+  <div class="password-container">
+    <h1>Isi password, jangan isi hati 😏</h1>
+    <div class="password-card">
+      <div class="password-left">
+        <img src="gif/ppp.jpg" alt="Foto Kamu" />
+      </div>
+      <div class="password-right">
+        <div id="passwordDisplay"></div>
+        <div class="keypad">
+          <button onclick="pressNum('1')">1</button>
+          <button onclick="pressNum('2')">2</button>
+          <button onclick="pressNum('3')">3</button>
+          <button onclick="pressNum('4')">4</button>
+          <button onclick="pressNum('5')">5</button>
+          <button onclick="pressNum('6')">6</button>
+          <button onclick="pressNum('7')">7</button>
+          <button onclick="pressNum('8')">8</button>
+          <button onclick="pressNum('9')">9</button>
+          <button onclick="clearPass()">C</button>
+          <button onclick="pressNum('0')">0</button>
+          <button onclick="checkPassword()">OK</button>
         </div>
-        <div class="password-right">
-          <div id="passwordDisplay"></div>
-          <div class="keypad">
-            <button onclick="pressNum('1')">1</button>
-            <button onclick="pressNum('2')">2</button>
-            <button onclick="pressNum('3')">3</button>
-            <button onclick="pressNum('4')">4</button>
-            <button onclick="pressNum('5')">5</button>
-            <button onclick="pressNum('6')">6</button>
-            <button onclick="pressNum('7')">7</button>
-            <button onclick="pressNum('8')">8</button>
-            <button onclick="pressNum('9')">9</button>
-            <button onclick="clearPass()">C</button>
-            <button onclick="pressNum('0')">0</button>
-            <button onclick="checkPassword()">OK</button>
-          </div>
-          <p id="errorMsg"></p>
-        </div>
+        <p id="errorMsg"></p>
       </div>
     </div>
+  </div>
+</div>
+
+
 
     <!-- Halaman Pertanyaan -->
     <div id="questionPage" class="page">
@@ -642,6 +742,17 @@ btw Jumat tanggal merah yhh,jadi kita bisa mainn nih 3 hari 👉👈
   </div>
 </div>
 
+  
+<!-- Closing Section -->
+<div id="closingSection">
+  <h2 class="closing-title">Oke, selesai</h2>
+  <p>Jangan kaget kalo abis ini kamu malah senyum-senyum sendiri, emang efek aku begitu sih haha</p>
+
+  <!-- GIF penutup -->
+  <div class="closing-gif">
+    <img src="gif/closing3.gif" alt="closing" />
+  </div>
+</div>
 
 
     </section>
@@ -650,115 +761,114 @@ btw Jumat tanggal merah yhh,jadi kita bisa mainn nih 3 hari 👉👈
 
 
     <!-- Java Script -->
-    <script>
-      const correctPassword = "2839";
-      let noBtnSize = 1;
-      let yesBtnSize = 1;
-      let inputPass = "";
+   <script>
+  const correctPassword = "2839";
+  let noBtnSize = 1;
+  let yesBtnSize = 1;
+  let inputPass = "";
 
-      function showPage(id) {
-        document
-          .querySelectorAll(".page")
-          .forEach((p) => p.classList.remove("active"));
-        document.getElementById(id).classList.add("active");
-      }
+  function showPage(id) {
+    document
+      .querySelectorAll(".page")
+      .forEach((p) => p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+  }
 
-      function pressNum(num) {
-        inputPass += num;
-        document.getElementById("passwordDisplay").textContent = "*".repeat(
-          inputPass.length
-        );
-      }
+  function pressNum(num) {
+    inputPass += num;
+    document.getElementById("passwordDisplay").textContent = "*".repeat(
+      inputPass.length
+    );
+  }
 
-      function clearPass() {
-        inputPass = "";
-        document.getElementById("passwordDisplay").textContent = "";
-      }
+  function clearPass() {
+    inputPass = "";
+    document.getElementById("passwordDisplay").textContent = "";
+  }
 
-      function checkPassword() {
-        if (inputPass === correctPassword) {
-          showPage("questionPage");
-        } else {
-          document.getElementById("errorMsg").innerText = "Password salah 😢";
-          clearPass();
-        }
-      }
+  function checkPassword() {
+    if (inputPass === correctPassword) {
+      showPage("questionPage");
+    } else {
+      document.getElementById("errorMsg").innerText = "Password salah 😢";
+      clearPass();
+    }
+  }
 
-      function yesAnswer() {
-        showPage("answerPage");
-        const music = document.getElementById("bgMusic");
-        music.play();
-      }
-
-      function goToLanding() {
-        showPage("landingPage");
-
-        // animasi teks di landingPage
-        const elements = document.querySelectorAll(
-          "#landingPage h1, #landingPage p"
-        );
-        elements.forEach((el, index) => {
-          el.classList.remove("zoom-effect");
-          void el.offsetWidth;
-          el.style.animationDelay = `${index * 1}s`;
-          el.classList.add("zoom-effect");
-        });
-      }
-
-      function moveButton() {
-        const noBtn = document.getElementById("noBtn");
-        const yesBtn = document.getElementById("yesBtn");
-
-        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
-
-        noBtnSize -= 0.1;
-        if (noBtnSize < 0.3) noBtnSize = 0.3;
-        noBtn.style.transform = `scale(${noBtnSize})`;
-
-        yesBtnSize += 0.1;
-        yesBtn.style.transform = `scale(${yesBtnSize})`;
-      }
-
-      // Scroll trigger buat buku
-      window.addEventListener("scroll", () => {
-        const book = document.getElementById("bookSection");
-        if (!book) return;
-        const rect = book.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        if (rect.top < windowHeight - 100) {
-          book.classList.add("show");
-        }
+  function yesAnswer() {
+    showPage("answerPage");
+    const music = document.getElementById("bgMusic");
+    if (music) {
+      music.play().catch(() => {
+        console.log("Autoplay diblokir, user harus klik dulu.");
       });
-      function goToLanding() {
-        showPage("landingPage");
+    }
+  }
 
-        // animasi teks di landingPage
-        const elements = document.querySelectorAll(
-          "#landingPage h1, #landingPage p"
-        );
-        elements.forEach((el, index) => {
-          el.classList.remove("zoom-effect");
-          void el.offsetWidth;
-          el.style.animationDelay = `${index * 1}s`;
-          el.classList.add("zoom-effect");
-        });
+  function goToLanding() {
+    showPage("landingPage");
 
-        // reset supaya bookSection bisa ikut muncul kalau discroll
-        const book = document.getElementById("bookSection");
-        if (book) book.style.display = "flex";
-      }
-      document.addEventListener("DOMContentLoaded", () => {
-        const rows = document.querySelectorAll(".chat-row");
-        rows.forEach((row, i) => {
-          row.style.animationDelay = `${i * 1.2}s`;
-        });
-      });
-      
-    </script>
+    // animasi teks di landingPage
+    const elements = document.querySelectorAll(
+      "#landingPage h1, #landingPage p"
+    );
+    elements.forEach((el, index) => {
+      el.classList.remove("zoom-effect");
+      void el.offsetWidth;
+      el.style.animationDelay = `${index * 1}s`;
+      el.classList.add("zoom-effect");
+    });
+
+    // reset supaya bookSection bisa ikut muncul kalau discroll
+    const book = document.getElementById("bookSection");
+    if (book) book.style.display = "flex";
+  }
+
+  // Tombol No makin kecil, Yes makin gede
+  function moveButton() {
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    if (!noBtn || !yesBtn) return;
+
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    noBtnSize -= 0.2; // makin kecil
+    if (noBtnSize < 0.3) noBtnSize = 0.3;
+    noBtn.style.transform = `scale(${noBtnSize})`;
+
+    yesBtnSize += 0.3; // makin gede
+    yesBtn.style.transform = `scale(${yesBtnSize})`;
+  }
+
+  // Scroll trigger buat buku
+  window.addEventListener("scroll", () => {
+    const book = document.getElementById("bookSection");
+    if (!book) return;
+    const rect = book.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    if (rect.top < windowHeight - 100) {
+      book.classList.add("show");
+    }
+  });
+
+  // animasi chat row delay
+  document.addEventListener("DOMContentLoaded", () => {
+    const rows = document.querySelectorAll(".chat-row");
+    rows.forEach((row, i) => {
+      row.style.animationDelay = `${i * 1.2}s`;
+    });
+  });
+
+  function goToClosing() {
+    showPage("closingPage");
+  }
+</script>
+
+
       <!-- taruh di paling bawah body -->
 <div class="fireworks"></div>
 <div class="fireworks"></div>
